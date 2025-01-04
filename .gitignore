@@ -370,3 +370,5 @@ FodyWeavers.xsd
 /SalaryV2/Web.config
 /SalaryV2/Web.Debug.config
 /SalaryV2/Web.Release.config
+/SalaryV2/Views/Web.config
+/SalaryV2/App_Browsers/qt.browser
