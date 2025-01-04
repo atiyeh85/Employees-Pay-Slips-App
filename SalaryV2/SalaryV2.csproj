@@ -253,17 +253,6 @@
     <Compile Include="Models\Search.cs" />
     <Compile Include="Models\Storedb.cs" />
     <Compile Include="Models\Year.cs" />
-    <Compile Include="NewFolder1\Loan.cs" />
-    <Compile Include="NewFolder1\Model1.cs" />
-    <Compile Include="NewFolder1\vwCalculation.cs" />
-    <Compile Include="NewFolder1\vwContract.cs" />
-    <Compile Include="NewFolder1\vwElement.cs" />
-    <Compile Include="NewFolder1\vwElementItem.cs" />
-    <Compile Include="NewFolder1\vwParty.cs" />
-    <Compile Include="NewFolder1\vwPersonnel.cs" />
-    <Compile Include="NewFolder1\vwShred.cs" />
-    <Compile Include="NewFolder1\vwShredItem.cs" />
-    <Compile Include="NewFolder1\vwShredRemaining.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
