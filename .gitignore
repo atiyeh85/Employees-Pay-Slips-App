@@ -361,3 +361,12 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/SalaryV2/ApplicationInsights.config
+/SalaryV2/favicon.ico
+/SalaryV2/Global.asax
+/SalaryV2/Global.asax.cs
+/SalaryV2/packages.config
+/SalaryV2/Startup.cs
+/SalaryV2/Web.config
+/SalaryV2/Web.Debug.config
+/SalaryV2/Web.Release.config
