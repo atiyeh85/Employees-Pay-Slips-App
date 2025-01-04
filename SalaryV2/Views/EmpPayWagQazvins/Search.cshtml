@@ -1,0 +1,163 @@
+﻿@model SalaryV2.Models.Search
+@{
+    ViewBag.Title = "..: فرم بازیابی اطلاعات:..";
+}
+<style>
+    .row {
+        margin-right: 0;
+    }
+</style>
+<style>
+    /*body {
+        font-family: Tahoma;
+        font-size: medium
+    }*/
+
+    span {
+        color: #a813a0;
+        font-size: small
+    }
+</style>
+@using (Html.BeginForm("search", "EmpPayWagQazvins", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-info">
+                <div class=" panel-heading">
+                    <p class="text-lg-center">
+                        ..:  به سامانه فیش حقوقی کارکنان شهرداری قزوین خوش آمدید:..
+                    </p>
+                </div>
+                <div class="panel-body text-sm-right">
+                    <div class="row">
+            <div class="col-md-6 col-xs-offset-3 ">
+                <a href="@Url.Action("GenerateCode", "RandomNum")" class="btn btn-info ">
+                    ایجاد شناسه امنیتی
+                    <i class="fa fa-user-plus fa-2x"></i>
+
+                </a>
+            </div>
+        </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            @if (TempData["message"] != null)
+                            {
+                                <div class="alert alert-danger" style="color:#a30e0e;font-family:Tahoma;font-size:medium;text-align:center">
+                                    @TempData["message"]
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="alert-danger">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        </div>
+                        @if (!string.IsNullOrEmpty(ViewBag.Message))
+                        {
+                            <p></p>
+                            <p style="text-align:center;color:darkred">
+                                <span class="fa fa-bell-o faa-wrench animated " style="color:#a70808"></span>
+                               @ViewBag.Message
+                            </p>
+                        }
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <div>
+                                <div>
+                                    <span class="fa fa-star faa-wrench animated " style="color:#a70808"></span>
+
+                                    @Html.DropDownList("Contid", null, "---انتخاب نوع قرار داد---", new { @class = "form-control input-lg" })
+                                </div>
+                            </div>
+                            <div>
+                                <span class="fa fa-star faa-wrench animated " style="color:#a70808"></span>
+                                کد ملی
+                                <div style="">
+                                    <div class="input-group" style="margin-bottom: 10px">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-user-circle fa-2x ">
+                                            </i>
+                                        </span>
+                                        @Html.TextBoxFor(model => model.e1, new { @class = "form-control input-lg", placeholder = " کد ملی  ", autocomplete = "off" })
+                                    </div>
+                                    <b>
+                                        @Html.ValidationMessageFor(model => model.e1, "", new { @class = "text-danger" })
+                                    </b>
+                                </div>
+                            </div>
+                            <div>
+                                <span class="fa fa-star faa-wrench animated " style="color:#a70808"></span>
+                                شماره حساب
+                                <div style="">
+                                    <div class="input-group " style="margin-bottom: 10px" id="datePicker">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-user-circle fa-2x">
+                                            </i>
+                                        </span>
+                                        @Html.TextBoxFor(model => model.b2, new { @class = "form-control input-lg", placeholder = "شماره حساب  ", autocomplete = "off" })
+                                    </div>
+                                    <b>
+                                        @Html.ValidationMessageFor(model => model.b2, "", new { @class = "text-danger" })
+                                    </b>
+                                </div>
+                            </div>
+                            <div>
+                                <span class="fa fa-star faa-wrench animated " style="color:#a70808"></span>
+                                شناسه امنیتی
+                                <div style="">
+                                    <div class="input-group " style="margin-bottom: 10px" id="datePicker">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-user-circle fa-2x">
+                                            </i>
+                                        </span>
+                                        @Html.PasswordFor(model => model.SequrityCode, new { @class = "form-control input-lg", placeholder = "شناسه امنیتی  ", autocomplete = "off" })
+                                    </div>
+                                    <b>
+                                        @Html.ValidationMessageFor(model => model.SequrityCode, "", new { @class = "text-danger" })
+                                    </b>
+                                </div>
+                            </div>
+                            <div class="text-center btn-lg">
+                                <button class="btn  btn-warning  fa-x" data-last="Finish ">
+                                    نمایش فیش حقوقی
+                                    <i class="fa fa-arrow-circle-left"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-sm-7 text-right">
+                            <p class="text-body">
+                                <span class="fa fa-bell faa-wrench animate" style="color:#a70808"></span>
+                                همکار گرامی :
+                            </p>
+                            <p>
+                                <span class="fa fa-check "></span>
+                                لطفا از مرورگر فایرفاکس استفاده نمائید.
+                            </p>
+                            <p>
+                                <span class="fa fa-check "></span>
+                                اگر تا کنون شناسه امنیتی دریافت نکرده اید  گزینه ایجاد شناسه امنیتی را کلیک نمائید توجه داشته باشید که دریافت یک بار شناسه امنیتی کافی می باشد  .
+                            </p>
+                            <p>
+                                <span class="fa fa-check "></span>
+                                پیامک حاوی شناسه امنیتی جهت مشاهده فیش ارسال خواهد شد.
+                            </p>
+                            <p>
+                                <span class="fa fa-check "></span>
+                                درصورت  تمایل برای تغییر شناسه امنیتی  گزینه ایجاد شناسه را کلیلک نمائید .
+                            </p>
+                            <p>
+                                <span class="fa fa-check "></span>
+                                در صورت بروز خطا در هنگام ثبت نام با شماره <strong>33361230</strong> سازمان فناوری اطلاعات و ارتباطات شهرداری قزوین تماس  حاصل فرمائید.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+
+    </div>
+}

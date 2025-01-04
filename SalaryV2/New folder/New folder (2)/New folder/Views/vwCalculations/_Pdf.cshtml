@@ -1,0 +1,390 @@
+﻿@model IEnumerable<SalaryV2.Models.Corporate.vwCalculation>
+@{
+    ViewBag.Title = "..: لیست اطلاعات:..";
+    bool ispdf = false;
+    try
+    {
+        //ispdf = bool.Parse(Request.QueryString["ispdf"]);
+    }
+    catch { }
+    var Listem = ViewBag.EmployeeName;
+    ViewBag.Title = "..:فیش حقوقی:..";
+    var loan = ViewBag.loan;
+    var Add = ViewBag.Add;
+    var pay = ViewBag.Pay;
+    var MonthTStr = ViewBag.e7;
+    var TotalSalary = ViewBag.TotalSalary;
+    var EmpProfile = ViewBag.EmpProfile;
+    var Remined = ViewBag.Remined;
+    var Sub = ViewBag.Sub;
+    var Karkerd = ViewBag.Karkerd;
+    var kosorat = 0;
+    var TPerMonth = 0;
+    var TRemind = 0;
+    var ContractA = ViewBag.ContractA;
+    var Kark = 0;
+
+    var Var1 = 0.0m;
+
+    var Var2 = 0.0m;
+    var ggg = 0.0m;
+    var _string = "";
+    Layout = null;
+}
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/bootstrap-rtl.css" rel="stylesheet" />
+<style>
+    body {
+        background-color: #ffffff;
+        font-family: Tahoma;
+        font-size: smaller;
+        margin: 15px;
+        padding: 15px;
+        -webkit-print-color-adjust: exact;
+    }
+
+    .isnum {
+        text-align: center;
+        font-family: 'B Nazanin';
+        font-style: inherit;
+        font-size: small;
+    }
+
+    .istitr {
+        text-align: center;
+        font-family: 'B Nazanin';
+        font-size: small;
+    }
+
+    tr {
+        margin: 5px;
+        padding: 5px
+    }
+
+    table {
+        width: 100%;
+        padding: 5px;
+        margin: 5px;
+        font-family: 'B Nazanin';
+        text-align: center;
+    }
+
+    .column {
+        color: #166906;
+        font-style: oblique;
+        font-weight: 600
+    }
+
+
+    .sum {
+        color: #165685;
+        font-size: medium
+    }
+
+    p {
+        font-family: Tahoma;
+        font-size: large;
+        color: black;
+        text-align: center;
+    }
+</style>
+<style type="text/css" media="print">
+    .table-striped > tbody > tr:nth-of-type(2n+1) {
+        background-color: #b2b1b1 !important;
+    }
+
+    body {
+        margin: 0px;
+        padding: 0px;
+    }
+
+    .btn {
+        display: none;
+    }
+
+    .glyphicon {
+        display: none;
+    }
+
+    .header {
+        display: none;
+    }
+
+    .footer {
+        display: none;
+    }
+
+    .noprint {
+        display: none;
+    }
+</style>
+<img src="~/Content/images/Banner.jpg" class="img-responsive" width="100%" />
+<div class="row">
+    <div id="Grid">
+        <table class="table-bordered table-striped" style=" background-color:white">
+            <tbody>
+                <tr>
+                    @*<td colspan="1">
+                        <img src="~/Content/Image/images.png" style="height:40px;width:40px" />
+                    </td>*@
+                    <td colspan="6">
+                        <h4>
+                            <b>  شهرداری قزوین &nbsp;   @ContractA[0].CostCenterTitle&nbsp; @MonthTStr &nbsp;   @Listem.Year</b>
+                        </h4>
+                    </td>
+                </tr>
+                <tr class="isnum">
+                    <td>
+                        <b>
+                            شماره پرسنلی:&nbsp;  @Listem.DLCode
+                        </b>
+                    </td>
+                    <td>
+                        <b>
+                            نام خانوادگی:&nbsp;  @Listem.DLTitle
+                        </b>
+                    </td>
+                    <td>
+                        <b>
+                            نام پدر:&nbsp; @EmpProfile.FatherName
+                        </b>
+                    </td>
+                    <td>
+                        <b>
+                            شماره بیمه:&nbsp; @EmpProfile.InsuranceNumber
+                        </b>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        @if (ViewBag.MessageMonthNull != null)
+        {
+            <table width=100% class="table-bordered table-striped table-hover isnum" style=" background-color:white">
+
+                <thead>
+                    <tr>
+                        <td colspan="2"><b>کارکرد</b></td>
+                        <td colspan="2"><b>مزایا</b></td>
+                        <td colspan="5"><b>کسورات</b></td>
+
+                    </tr>
+                    <tr>
+                        <td>کارکرد</td>
+                        <td>مقدار به روز  </td>
+                        <td>مزایا</td>
+                        <td>مقدار به ریال</td>
+                        <td>کسور</td>
+                        <td> مقدار به ریال</td>
+                        <td>نام</td>
+                        <td>   اقساط به ریال</td>
+                        <td>  مانده به ریال  </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="9"><b>سطری برای اطلاعات وار شده موجود نمیباشد</b></td>
+                    </tr>
+                </tbody>
+                <tfoot class="panel-footer sum">
+                    <tr>
+                        <td></td>
+
+                    </tr>
+
+                </tfoot>
+            </table>
+        }
+        else
+        {
+            var Length = Math.Max((int)loan.Count, Math.Max((int)Karkerd.Count, Math.Max((int)Add.Count, (int)Sub.Count)));
+            <table width=100% class="table-bordered table-striped table-hover isnum" style=" background-color:white">
+
+                <thead>
+                    <tr>
+                        <td colspan="2"><b>کارکرد</b></td>
+                        <td colspan="2"><b>مزایا</b></td>
+                        <td colspan="5"><b>کسورات</b></td>
+                    </tr>
+                    <tr>
+                        <td>کارکرد</td>
+                        <td>مقدار    </td>
+                        <td>مزایا</td>
+                        <td>مقدار به ریال</td>
+                        <td>کسور</td>
+                        <td> مقدار به ریال</td>
+                        <td>نام</td>
+                        <td>   اقساط به ریال</td>
+                        <td>  مانده به ریال  </td>
+                    </tr>
+                </thead>
+                @for (int i = 0; i < Length; i++)
+                {
+                    <tr>
+                        @if (Karkerd.Count > i)
+                        {
+                            var ka = Karkerd[i];
+                            if (ka != null)
+                            {
+                                {
+                                    Var1 = Math.Floor(ka.Value);
+
+                                    Var2 = Var1 / 60;
+                                    ggg = Var2;
+
+                                }
+                                if (ka.ElementRef == 118 || ka.ElementRef == 152 || ka.ElementRef == 124)
+                                {
+
+                                    var var3 = (double)Var2 / 7.33;
+                                    Kark = (int)Math.Round(var3);
+                                    _string = " روز";
+                                }
+                                else
+                                {
+                                    Kark = (int)Math.Round(ggg);
+                                    _string = "ساعت";
+                                }
+
+                                <td>@ka.ElementTitle &nbsp; <b style="color:#034eb7">(@_string)</b></td>
+
+                                <td class="Currency column"><b>@Kark   </b></td>
+
+                            }
+                        }
+                        else
+                        {
+                            <td></td>
+
+                            <td></td>
+                        }
+                        @if (Add.Count > i)
+                        {
+                            var Ad = Add[i];
+                            if (Ad != null)
+                            {
+                                <td>@Ad.ElementTitle</td>
+                                <td class="Currency column"><b> @Math.Floor(Ad.Value)   </b></td>
+
+                            }
+                        }
+                        else
+                        {
+                            <td></td>
+                            <td></td>
+                        }
+
+                        @if (Sub.Count > i)
+                        {
+                            var Su = Sub[i];
+                            if (Su != null)
+                            {
+                                <td>@Su.ElementTitle</td>
+                                <td class="Currency column"><b>@Math.Floor(Su.Value)</b></td>
+                                {
+                                    var val = (int)Su.Value;
+                                    kosorat += val;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            <td></td>
+                            <td></td>
+                        }
+                        @if (loan.Count > i)
+                        {
+                            var loa = loan[i];
+                            if (loa != null)
+                            {
+                                <td>
+                                    @loa.Target
+                                </td>
+                                <td class="column">
+                                    <b class="Currency"> @loa.PerMonth </b> &nbsp;
+                                </td>
+                                <td class="column">
+                                    <b class="Currency">@Math.Floor(loa.RemainedAmount)</b>
+                                </td>
+                                {
+                                    var vallo = (int)loa.TotalAmount;
+                                    TPerMonth += loa.PerMonth;
+
+                                    var TotalAmount = (int)loa.TotalAmount;
+                                    TRemind += loa.RemainedAmount;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        }
+                    </tr>
+                }
+                <tfoot class="panel-footer sum">
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td><b> مجموع پرداخت ها :</b></td>
+                        <td class="Currency"><b>@TotalSalary</b></td>
+                        <td><b>کسورات:</b></td>
+                        <td class="Currency"><b>@kosorat</b></td>
+                        <td>
+                            <b>
+                                وام:
+                            </b>
+
+                        <td class="Currency"><b>@TPerMonth</b></td>
+                        <td class="Currency"><b>@TRemind</b></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td><b>خالص پرداختنی:</b></td>
+                        <td class="Currency"><b> @pay</b></td>
+                        <td colspan="6" style="color:#188a79;font-size:medium;font-family:b Nazanin,Tahoma;text-align:center">
+                            مبلغ    <b class="Currency"><b> @pay</b></b>  ریال نزد بانک شهر به شماره حساب <b>
+                                @Listem.AccountNo
+                        </b> واریز شد.
+                    </td>
+
+                </tr>
+
+            </tfoot>
+        </table>
+    }
+
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $(".Currency").each(function () {
+            $(this).text(Currency($(this).text()));
+        });
+    });
+    function Currency(Number) {
+        var Money = Number * 1;
+        var Vahed = " ریال ";
+        var FaCurrency = Money.toString();
+        for (var index = FaCurrency.length - 3; index > 0; index -= 3) {
+            FaCurrency = FaCurrency.substr(0, index) + "," + FaCurrency.substr(index);
+        }
+        return FaCurrency;
+    }
+
+</script>
+
+
+
+
+
+
+
+
+
+
+

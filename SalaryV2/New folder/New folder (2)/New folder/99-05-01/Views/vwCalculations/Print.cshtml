@@ -1,0 +1,428 @@
+﻿@model IEnumerable<SalaryV2.Models.Corporate.vwCalculation>
+@{
+    ViewBag.Title = "..: لیست اطلاعات:..";
+    bool ispdf = false;
+    try
+    {
+        //ispdf = bool.Parse(Request.QueryString["ispdf"]);
+    }
+    catch { }
+    var Listem = ViewBag.EmployeeName;
+    ViewBag.Title = "..:فیش حقوقی:..";
+    var loan = ViewBag.loan;
+    var Add = ViewBag.Add;
+    var pay = ViewBag.Pay;
+    var MonthTStr = ViewBag.e7;
+    var TotalSalary = ViewBag.TotalSalary;
+    var EmpProfile = ViewBag.EmpProfile;
+    var Remined = ViewBag.Remined;
+    var Sub = ViewBag.Sub;
+    var Karkerd = ViewBag.Karkerd;
+    var kosorat = 0;
+    var Tloan = 0;
+    var ContractA = ViewBag.ContractA;
+    var Kark = 0;
+}
+
+
+<style>
+    /*body {
+        background-color: #ffffff;
+        font-family: Tahoma;
+        font-size: small;
+        margin: 35px;
+        padding: 35px;
+        -webkit-print-color-adjust: exact;
+    }*/
+
+    .isnum {
+        text-align: center;
+        font-family: 'B Nazanin';
+        font-style: inherit;
+        font-size: medium;
+    }
+
+    .istitr {
+        text-align: center;
+        font-family: 'B Nazanin';
+        font-size: small;
+    }
+
+    tr {
+        margin: 10px;
+        padding: 10px
+    }
+
+    table {
+        width: 100%;
+        padding: 10px;
+        margin: 10px;
+        font-family: 'B Nazanin';
+        text-align: center;
+    }
+
+    .column {
+        color: #166906;
+        font-style: oblique;
+        font-weight: 600
+    }
+
+
+    .sum {
+        color: #165685;
+        font-size: medium
+    }
+
+    p {
+        font-family: Tahoma;
+        font-size: large;
+        color: black;
+        text-align: center;
+    }
+</style>
+<style type="text/css" media="print">
+    .table-striped > tbody > tr:nth-of-type(2n+1) {
+        background-color: #b2b1b1 !important;
+    }
+
+    body {
+        margin: 0px;
+        padding: 0px;
+    }
+
+    .btn {
+        display: none;
+    }
+
+    .glyphicon {
+        display: none;
+    }
+
+    .header {
+        display: none;
+    }
+
+    .footer {
+        display: none;
+    }
+
+    .noprint {
+        display: none;
+    }
+</style>
+
+<div class="form-horizontal ">
+
+    @if (ispdf == false)
+    {
+        <div class="row noprint">
+            @using (Html.BeginForm())
+            {
+                <div class="panel">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                سال
+                                @Html.DropDownList("YearId", null, "---سال---", new { @class = "form-control " })
+                            </div>
+                            <div class="col-md-4">
+                                ماه
+                                @Html.DropDownList("MonthId", null, "---ماه---", new { @class = "form-control " })
+                            </div>
+                            <div class="col-md-4">
+                                <input type="submit" class="btn btn-primary" value="جستجو" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+            }
+        </div>
+    }
+</div>
+<div class="row">
+    <div id="Grid">
+        <table class="table-bordered table-striped" style=" background-color:white">
+            <tbody>
+                <tr>
+                   
+                    <td colspan="4" style="text-align:center">
+                        <h4>
+                            <b>  شرکت بهسازان آینده قزوین (وابسته به شهرداری قزوین)  &nbsp;   @ContractA[0].CostCenterTitle&nbsp; @MonthTStr &nbsp;   @Listem.Year</b>
+                        </h4>
+                    </td>
+                </tr>
+                <tr class="isnum">
+                    <td>
+                        <b>
+                            شماره پرسنلی:&nbsp;  @Listem.DLCode
+                        </b>
+                    </td>
+                    <td>
+                        <b>
+                            نام خانوادگی:&nbsp;  @Listem.DLTitle
+                        </b>
+                    </td>
+                    <td>
+                        <b>
+                            نام پدر:&nbsp; @EmpProfile.FatherName
+                        </b>
+                    </td>
+                    <td>
+                        <b>
+                            شماره بیمه:&nbsp; @EmpProfile.InsuranceNumber
+                        </b>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        @if (ViewBag.MessageMonthNull != null)
+        {
+            <table width=100% class="table-bordered table-striped table-hover isnum" style=" background-color:white">
+
+                <thead>
+                    <tr>
+                        <td colspan="2"><b>کارکرد</b></td>
+                        <td colspan="2"><b>مزایا</b></td>
+                        <td colspan="5"><b>کسورات</b></td>
+
+                    </tr>
+                    <tr>
+                        <td>کارکرد</td>
+                        <td>مقدار به روز  </td>
+                        <td>مزایا</td>
+                        <td>مقدار به ریال</td>
+                        <td>کسور</td>
+                        <td> مقدار به ریال</td>
+                        <td>نام</td>
+                        <td>   اقساط به ریال</td>
+                        <td>  مانده به ریال  </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="9"><b>سطری برای اطلاعات وار شده موجود نمیباشد</b></td>
+                    </tr>
+                </tbody>
+                <tfoot class="panel-footer sum">
+                    <tr>
+                        <td></td>
+
+                    </tr>
+
+                </tfoot>
+            </table>
+        }
+        else
+        {
+            var Length = Math.Max((int)loan.Count, Math.Max((int)Karkerd.Count, Math.Max((int)Add.Count, (int)Sub.Count)));
+            <table width=100% class="table-bordered table-striped table-hover isnum" style=" background-color:white">
+
+                <thead>
+                    <tr>
+                        <td colspan="2"><b>کارکرد</b></td>
+                        <td colspan="2"><b>مزایا</b></td>
+                        <td colspan="5"><b>کسورات</b></td>
+
+                    </tr>
+                    <tr>
+                        <td>کارکرد</td>
+                        <td>مقدار به روز  </td>
+                        <td>مزایا</td>
+                        <td>مقدار به ریال</td>
+                        <td>کسور</td>
+                        <td> مقدار به ریال</td>
+                        <td>نام</td>
+                        <td>   اقساط به ریال</td>
+                        <td>  مانده به ریال  </td>
+                    </tr>
+                </thead>
+                @for (int i = 0; i < Length; i++)
+                {
+                    <tr>
+                        @if (Karkerd.Count > i)
+                        {
+                            var ka = Karkerd[i];
+                            if (ka != null)
+                            {
+                                {
+                                    var Var1 = @Math.Floor(ka.Value);
+                                    var Var2 = (double)(Var1 / 60);
+                                    var ggg = Math.Truncate(Var2);
+                                    var var3 = (double)(Var2 / 7.33);
+                                    Kark = (int)Math.Round(var3);
+
+                                }
+                                <td>@ka.ElementTitle</td>
+
+                                <td class="Currency column"><b>@Kark</b></td>
+
+                            }
+                        }
+                        else
+                        {
+                            <td></td>
+
+                            <td></td>
+                        }
+                        @if (Add.Count > i)
+                        {
+                            var Ad = Add[i];
+                            if (Ad != null)
+                            {
+                                <td>@Ad.ElementTitle</td>
+                                <td class="Currency column"><b> @Math.Floor(Ad.Value)   </b></td>
+
+                            }
+                        }
+                        else
+                        {
+                            <td></td>
+                            <td></td>
+                        }
+
+                        @if (Sub.Count > i)
+                        {
+                            var Su = Sub[i];
+                            if (Su != null)
+                            {
+                                <td>@Su.ElementTitle</td>
+                                <td class="Currency column"><b>@Math.Floor(Su.Value)</b></td>
+                                {
+                                    var val = (int)Su.Value;
+                                    kosorat += val;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            <td></td>
+                            <td></td>
+                        }
+                        @if (loan.Count > i)
+                        {
+                            var loa = loan[i];
+                            if (loa != null)
+                            {
+                                <td>
+                                    @loa.Target
+                                </td>
+                                <td class="column">
+                                    <b class="Currency"> @Math.Floor(loa.TotalAmount) </b> &nbsp;
+                                </td>
+                                <td class="column">
+                                    <b class="Currency">@Math.Floor(loa.RemainedAmount)</b>
+                                </td>
+                                {
+                                    var vallo = (int)loa.TotalAmount;
+                                    Tloan += vallo;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        }
+                    </tr>
+                }
+                <tfoot class="panel-footer sum">
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td><b> مجموع پرداخت ها :</b></td>
+                        <td class="Currency"><b>@TotalSalary</b></td>
+                        <td><b>کسورات:</b></td>
+                        <td class="Currency"><b>@kosorat</b></td>
+                        <td>
+                            <b>
+                                وام:
+                            </b>
+
+                        <td class="Currency"><b>@Tloan</b></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td><b>خالص پرداختنی:</b></td>
+                        <td class="Currency"><b> @pay</b></td>
+                        <td colspan="6" style="color:#188a79;font-size:medium;font-family:b Nazanin,Tahoma;text-align:center">
+                            مبلغ    <b class="Currency"><b> @pay</b></b>  ریال نزد بانک شهر به شماره حساب <b>@Listem.AccountNo
+                            </b> واریز شد.
+                        </td>
+
+                    </tr>
+
+                    @if (ispdf == false)
+                    {
+                        <tr class="noprint">
+                            <td colspan="9">
+
+                                <button type="submit" class="btn btn-default " data-dismiss="modal" id="Printbtn" onclick="window.print();">
+                                    <img src="~/Content/print-icon.png" style="height:55px;width:55px" />
+                                </button>
+                                |
+
+                                <a href="/vwCalculations/GeneratePDF/?id=@Listem.AccountNo&e1=@EmpProfile.IdentificationCode&c4=@Listem.Year&c5=@Listem.Month" title="pdfخروجی " class="">
+                                    <img src="~/Content/Adobe-PDF-Document-icon.png" style="height:50px;width:50px" />
+                                </a>
+                                |
+                                <a href="/DWHEmpPayWagNews/search" style="color:darkred" class="a-4x" title="خروج">
+                                    <img src="~/Content/Button-Delete-icon.png" style="height:50px;width:50px" />
+                                </a>
+
+                            </td>
+                        </tr>
+                    }
+                </tfoot>
+            </table>
+        }
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        $('#Printbtn').on('click', function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: 'post',
+                url: '@Url.Action("IsPrint", "Logs")',
+                success: function (data) {
+                    if (data.toString() == "True") {
+                    }
+                    else if (data.toString() == "false") {
+                    }
+                }
+            })
+        });
+        document.getElementsByTagName("BODY")[0].onafterprint = function() {myFunction()};
+        function myFunction() {
+            var response = null;
+            $.ajax({
+                async: true,
+                url: '@Url.Action("IsPrintM", "Logs")',
+                cache: false,
+                dataType: "json",
+                success: function (data) {
+
+                    if (data.toString() == "True") {
+
+                    }
+                    else if (data.toString() == "false") {
+                    }
+                }
+            });
+        }
+    </script>
+}
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,221 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>..:   فیش حقوقی  :..</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="Jaunt Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Scripts/adminlte")
+    @Scripts.Render("~/bundles/modernizr")
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <link href="~/Content/bootstrap-rtl.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome-ie7.min.css" rel="stylesheet" />
+    <link href="~/Content/fontawesome-all.min.css" rel="stylesheet" />
+    @Scripts.Render("~/bundles/modalform")
+    @Scripts.Render("~/bundles/jqueryvalUnobtrusive")
+    @Styles.Render("~/Content/themes/base/css")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script type="text/javascript">
+			jQuery(document).ready(function($) {
+				$(".scroll").click(function(event){
+					event.preventDefault();
+					$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+				});
+			});
+    </script>
+</head>
+<body>
+    <style>
+
+        .contant-main {
+            padding: 3em 0px 8em 0px;
+            text-align: center;
+        }
+
+        .footer {
+            background: #CBB25C;
+            padding: 1em 0px;
+        }
+
+        .h-strip {
+            background: #A30069;
+            padding: 1em 0px;
+        }
+
+        #sticky_navigation {
+            z-index: 5000;
+        }
+
+        .mystyle {
+            font-family: 'A EntezareZohoor 6 **';
+        }
+
+        .footer {
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background: #6CA7D8;
+        }
+
+        .footer {
+            height: 70px;
+        }
+
+        #sticky_navigation {
+            background: #DAA66D;
+        }
+
+        .footer {
+            z-index: 3500;
+        }
+    </style>
+
+    <div id="demo_top_wrapper">
+        <div id="sticky_navigation_wrapper">
+            <div id="sticky_navigation">
+                <div class="h-strip" style="line-height: 0.5000;">
+                    <div class="container">
+                        <div class="h-strip-main">
+                            <div class="h-strip-logo">
+                                <div class="h-strip-right">
+                                    @*    <img src="~/Content/images/logo.png" style="height:50px;width:50px" class="img-responsive"/>*@
+                                </div>
+                                <div>
+                                    @Html.Partial("_LoginPartial")
+
+
+                                </div>
+                                <div class="clearfix"> </div>
+                            </div>
+                            <!-- top-nav -->
+
+                            <span class="menu"> </span>
+                            <div class="cleary"> </div>
+                            <div class="top-strip">
+                                <nav class="cl-effect-4">
+                                    <ul class="top-nav">
+
+                                        @*@if (User.Identity.IsAuthenticated)
+                                            {
+                                                <li><a href="/PersonPerofiles/Index">لیست شرکت کنندگان    </a></li>
+                                                <li><a href="/PersonPerofiles/Voter">   لیست     </a></li>
+                                            }*@
+
+                                    </ul>
+
+
+                                </nav>
+                            </div>
+
+                            <!--ترجمه شده توسط مرجع تخصصی برنامه نویسان-->
+                            <div id="modal-container" class="modal fade" tabindex="-1" role="dialog">
+                                <div class="modal-content">
+                                </div>
+                            </div>
+                            <script>
+					$( "span.menu" ).click(function() {
+					  $( ".top-strip" ).slideToggle( "slow", function() {
+					    // Animation complete.
+					  });
+					});
+                            </script>
+                            <!-- top-nav -->
+                            <div class="clearfix"> </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <section id="main">
+        @*<img src="~/Content/images/Banner.jpg" class="img-responsive" width="100%" />*@
+        <img src="~/Content/images/Banner.jpg"class="img-responsive noprint" width="100%" />
+        <div class="contant">
+            <div class="container">
+                <div class="contant-main">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+        <script>
+		$(document).ready(function () {
+		    size_li = $("#myList li").size();
+		    x=2;
+		    $('#myList li:lt('+x+')').show();
+		    $('#loadMore').click(function () {
+		        x= (x+1 <= size_li) ? x+1 : size_li;
+		        $('#myList li:lt('+x+')').show();
+		    });
+		    $('#showLess').click(function () {
+		        x=(x-1<0) ? 1 : x-1;
+		        $('#myList li').not(':lt('+x+')').hide();
+		    });
+		});
+        </script>
+
+        <!--feature grid start here-->
+        <div class="map">
+        </div>
+        <!--map end here-->
+        <!--footer start here-->
+        <div class="footer">
+            <div class="container">
+                <div class="footer-main">
+                    <div class="col-md-6 footer-right">
+                    </div>
+                    <div class="col-md-10 footer-left">
+                        <p class="footer-class"> کلیه حقوق مادی و معنوی این سامانه متعلق به سازمان فناوری اطلاعات و ارتباطات شهرداری قزوین می باشد|<a href="qazvin.ir" target="_blank">شهرداری قزوین </a> </p>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+            </div>
+            @*<script type="text/javascript">
+										$(document).ready(function() {
+											/*
+											var defaults = {
+									  			containerID: 'toTop', // fading element id
+												containerHoverID: 'toTopHover', // fading element hover id
+												scrollSpeed: 1200,
+												easingType: 'linear'
+									 		};
+											*/
+
+											$().UItoTop({ easingType: 'easeOutQuart' });
+
+										});
+            </script>*@
+            <a href="#" id="toTop" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a>
+        </div>
+    </section>
+    @RenderSection("scripts", required: false)
+    <script>
+
+        $(document).ready(function () {
+
+            $(".Currency").each(function () {
+                $(this).text(Currency($(this).text()));
+            });
+        });
+        function Currency(Number) {
+            var Money = Number * 1;
+            var Vahed = " ریال ";
+            var FaCurrency = Money.toString();
+            for (var index = FaCurrency.length - 3; index > 0; index -= 3) {
+                FaCurrency = FaCurrency.substr(0, index) + "," + FaCurrency.substr(index);
+            }
+            return FaCurrency;
+        }
+    </script>
+
+   
+</body>
+</html>

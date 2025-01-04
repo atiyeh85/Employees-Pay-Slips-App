@@ -1,0 +1,139 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+
+    @Styles.Render("~/Content/css")
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("styles", required: false)
+
+</head>
+<body>
+
+    <style>
+        .alert-success {
+            color: #67559c;
+            background-color: #e2deef;
+            border-color: #e2deef;
+        }
+
+        .navbar-default .navbar-brand {
+            color: #ffffff;
+        }
+
+        body {
+            font-family: Tahoma;
+            font-size: medium;
+        }
+
+        .navbar-default {
+            background-color: #67559c;
+        }
+
+            .navbar-default .navbar-nav > li > a {
+                color: #ffffff;
+            }
+
+        .panel-default > .panel-heading {
+            color: #ffffff;
+            background-color: #307ecc;
+            border-color: #307ecc;
+        }
+
+        .panel-default {
+            border-color: #67559c;
+        }
+
+        .panel-info > .panel-heading {
+            color: #ffffff;
+            border-color: #67559c;
+            background-color: #67559c;
+            font-family: Tahoma;
+        }
+
+        .panel-info {
+            border-color: #FFC657;
+        }
+
+        .input-group-addon {
+            padding: 6px 12px;
+            font-size: 14px;
+            font-weight: normal;
+            line-height: 1;
+            color: #67559c;
+        }
+
+        .panel-success > .panel-heading {
+            color: #ffffff;
+            background-color: #67559c;
+            border-color: #67559c;
+        }
+    </style>
+
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <img src="~/Content/Image/Untitled-2.png" class="img-responsive" style="margin:5px;padding:5px" />
+            </div>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a href="/DWHEmpPayWagNews/Index"><i style="color:#fff" class="fa fa-fw fa-plus"></i> لیست فیش حقوق </a>
+                        </li>
+                        <li>
+                            <a href="/RandomNumbers/Index"><i style="color:#fff" class="fa fa-fw fa-plus"></i> لیست شناسه امنیتی </a>
+                        </li>
+                        @*<li>
+                                <a href="/RandomNumbers/Index"><i style="color:#fff" class="fa fa-fw fa-plus"></i> لیست شناسه  </a>
+                            </li>*@
+                        @Html.Partial("_LoginPartial")
+                    </ul>
+                </div>
+            }
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+    <div class="row">
+        <br />
+        <div class="container body-content ">
+            @RenderSection("featured", required: false)
+            @RenderBody()
+        </div>
+
+    </div>
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+<script>
+
+    $(document).ready(function () {
+
+        $(".Currency").each(function () {
+            $(this).text(Currency($(this).text()));
+        });
+    });
+    function Currency(Number) {
+        var Money = Number * 1;
+        var Vahed = " ریال ";
+        var FaCurrency = Money.toString();
+        for (var index = FaCurrency.length - 3; index > 0; index -= 3) {
+            FaCurrency = FaCurrency.substr(0, index) + "," + FaCurrency.substr(index);
+        }
+        return FaCurrency;
+    }
+
+</script>

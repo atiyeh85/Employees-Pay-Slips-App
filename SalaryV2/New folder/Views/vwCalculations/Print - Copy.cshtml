@@ -1,0 +1,458 @@
+﻿@model IEnumerable<SalaryV2.Models.Corporate.vwCalculation>
+@using PagedList;
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "..: لیست اطلاعات:..";
+    bool ispdf = false;
+    try
+    {
+        //ispdf = bool.Parse(Request.QueryString["ispdf"]);
+    }
+    catch { }
+    var id = "";
+    var c4 = 0;
+    var c5 = 0;
+    var e1 = ViewBag.e1;
+    Session["e1"] = e1;
+    var Listem = ViewBag.EmployeeName;
+    ViewBag.Title = "..:فیش حقوقی:..";
+    long sumOfPardakht = 0;
+    Int64 SumOfKasri = 0;
+    Int64 Sayer = 0;
+    var shomarehsesab = "";
+    var sum = 0;
+    Int64 Khales = 0;
+    var loan = ViewBag.loan;
+}
+<style>
+    body {
+        background-color: #ffffff;
+        font-family: Tahoma;
+        font-size: small;
+        margin: 35px;
+        padding: 35px;
+        -webkit-print-color-adjust: exact;
+    }
+
+    .isnum {
+        text-align: center;
+        font-family: 'B Nazanin';
+        font-style: inherit;
+        font-size: medium;
+    }
+
+    .istitr {
+        text-align: center;
+        font-family: 'B Nazanin';
+        font-size: small;
+    }
+
+    tr {
+        margin: 10px;
+        padding: 10px
+    }
+
+    /*table {
+        padding: 10px;
+        margin: 10px;
+        font-family: 'B Nazanin';
+        text-align: center;
+    }*/
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 5px;
+    }
+    .column {
+        color: #166906;
+        font-size: medium
+    }
+
+    .sum {
+        color: #165685;
+        font-size: medium
+    }
+
+    p {
+        font-family: Tahoma;
+        font-size: large;
+        color: black;
+        text-align: center;
+    }
+    
+</style>
+
+<style type="text/css" media="print">
+    .table-striped > tbody > tr:nth-of-type(2n+1) {
+        background-color: #b2b1b1 !important;
+    }
+
+    body {
+        margin: 0px;
+        padding: 0px;
+    }
+
+    .btn {
+        display: none;
+    }
+
+    .glyphicon {
+        display: none;
+    }
+
+    .header {
+        display: none;
+    }
+
+    .footer {
+        display: none;
+    }
+
+    .noprint {
+        display: none;
+    }
+</style>
+
+
+
+<div class="form-horizontal ">
+    <div class="row noprint">
+        <div class="col-md-12 ">
+            <div class="alert alert-danger ">
+                <p>
+                    <span style="color:#a70808" class="fa fa-bell faa-ring animated fa-2x">   &nbsp;   </span>
+                    <b style="font-size:larger">
+                        همکار گرامی
+                    </b>
+                    <br />
+                </p>
+                <p>
+                    لطفا از گرفتن پرینت فیش حقوقی در موارد غیر ضروری  خودداری فرمائید <br />
+                </p>
+                <p>
+                    با تشکر سازمان فناوری اطلاعات و ارتباطات شهرداری قزوین <br />
+                </p>
+            </div>
+        </div>
+    </div>
+
+    @if (ispdf == false)
+    {
+        <div class="row noprint">
+            @using (Html.BeginForm())
+            {
+                <div class="panel">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                سال
+                                @Html.DropDownList("YearId", null, "---سال---", new { @class = "form-control " })
+                            </div>
+                            <div class="col-md-4">
+                                ماه
+                                @Html.DropDownList("MonthId", null, "---ماه---", new { @class = "form-control " })
+                            </div>
+                            <div class="col-md-4">
+                                <input type="submit" class="btn btn-primary" value="جستجو" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+            }
+        </div>
+        <div class="row">
+            @if (ViewBag.MessageMonthNull == null)
+            {
+                <div id="Grid">
+                    <table class="table-bordered table-striped">
+                        <tbody>
+                            <tr class="">
+                                <td colspan="1">
+                                    <img src="~/Content/Image/images.png" style="height:40px;width:40px" />
+                                </td>
+                                <td colspan="5">
+                                    <h4>
+                                        شهرداری قزوین &nbsp;@Listem.BranchTitle &nbsp; @*@ViewBag.e7*@ &nbsp;  @Listem.Year
+                                    </h4>
+                                </td>
+                            </tr>
+                            <tr class="isnum">
+                                <td>
+                                    <b>
+                                        شماره پرسنلی:&nbsp;  @Listem.DLCode
+                                    </b>
+                                </td>
+                                <td>
+                                    <b>
+                                        نام خانوادگی:&nbsp;  @Listem.DLTitle
+                                    </b>
+                                </td>
+                                <td>
+                                    <b>
+                                        نام پدر:&nbsp; @*@Listem.Fthr*@
+                                    </b>
+                                </td>
+                                <td>
+                                    <b>
+                                        شماره بیمه:&nbsp;  @*@Listem.InsId*@
+                                    </b>
+                                </td>
+                                <td>
+                                    <b>
+                                        @*واحد سازمانی:&nbsp;  @Listem.Branch*@
+                                    </b>
+                                </td>
+                                <td>
+                                    <b>
+                                        @*گروه :&nbsp;  @Listem.CrnGrp &nbsp;&nbsp;گروه تشویقی :&nbsp;  @Listem.CrnExtGrop*@
+                                    </b>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div style="padding-top:0px !important">
+                    <div class="container ">
+                        <table class="table-bordered table-striped ">
+                            <tbody style="color:#23765d ">
+
+                                <tr style="text-align:center">
+                                    <td colspan="1">
+                                        <img src="~/Content/Image/images.png" style="height:40px;width:40px" />
+
+                                    </td>
+                                    <td colspan="6">
+                                        <h4>
+                                            شهرداری قزوین &nbsp;@ViewBag.d9 &nbsp;    @ViewBag.e7 &nbsp;  @ViewBag.e8
+                                        </h4>
+                                    </td>
+                                </tr>
+                                <tr style="text-align:center;" class="isnum">
+                                    <td>
+                                        <b>
+                                            شماره پرسنلی:&nbsp;  @ViewBag.a1
+                                        </b>
+                                    </td>
+
+                                    <td>
+                                        <b>
+                                            نام خانوادگی:&nbsp;  @ViewBag.a2 @ViewBag.a3
+                                        </b>
+
+                                    </td>
+
+                                    <td>
+                                        <b>
+                                            نام پدر:&nbsp; @ViewBag.b6
+                                        </b>
+
+                                    </td>
+                                    <td>
+                                        <b>
+                                            شماره بیمه:&nbsp;  @ViewBag.a4
+                                        </b>
+
+                                    </td>
+                                    <td colspan="3">
+                                        <b>
+                                            واحد سازمانی:&nbsp;  @ViewBag.d9
+                                        </b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="7">
+                                        <h4>
+                                            @ViewBag.MessageMonthNull
+                                        </h4>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+<body>
+    <table width=100% class="table-bordered ">
+        <thead>
+            <tr>
+            <tr style="text-align:center">
+                <td colspan="1">
+                    <img src="~/Content/Image/images.png" style="height:40px;width:40px" />
+
+                </td>
+                <td colspan="6">
+                    <h4>
+                        شهرداری قزوین &nbsp;@ViewBag.d9 &nbsp;    @ViewBag.e7 &nbsp;  @ViewBag.e8
+                    </h4>
+                </td>
+            </tr>
+            <tr style="text-align:center;" class="isnum">
+                <td>
+                    <b>
+                        شماره پرسنلی:&nbsp;  @ViewBag.a1
+                    </b>
+                </td>
+
+                <td>
+                    <b>
+                        نام خانوادگی:&nbsp;  @ViewBag.a2 @ViewBag.a3
+                    </b>
+
+                </td>
+
+                <td>
+                    <b>
+                        نام پدر:&nbsp; @ViewBag.b6
+                    </b>
+
+                </td>
+                <td>
+                    <b>
+                        شماره بیمه:&nbsp;  @ViewBag.a4
+                    </b>
+
+                </td>
+                <td colspan="3">
+                    <b>
+                        واحد سازمانی:&nbsp;  @ViewBag.d9
+                    </b>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="7">
+                    <h4>
+                        @ViewBag.MessageMonthNull
+                    </h4>
+                </td>
+            </tr>
+        </thead>
+        <tr>
+            <td>
+                <table width='100%' class="table-bordered table-striped" style="text-align:right">
+
+                    @foreach (var item in Model.Where(m => m.ElementClass == 1 & m.ElementType != 6))
+                    {
+                        <tr>
+                            <td>
+                                <b>@item.ElementTitle</b>
+                            </td>
+                            <td>
+                                <b>@item.Value</b>
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </td>
+            <td>
+                <table width='100%' class="table-bordered table-striped" style="text-align:right">
+
+                    @foreach (var item in Model.Where(m => m.ElementClass == 3))
+                    {
+                        <tr>
+                            <td>
+                                <b>@item.ElementTitle</b>
+                            </td>
+                            <td>
+                                <b>@item.Value</b>
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </td>
+            <td>
+                <table width='100%' class="table-bordered table-striped" style="text-align:right">
+
+                    @foreach (var item in Model.Where(m => m.ElementClass ==2))
+                    {
+                        <tr>
+                            <td>
+                                <b>@item.ElementTitle</b>
+                            </td>
+                            <td>
+                                <b>@item.Value</b>
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </td>
+            <td>
+                <table width='100%' class="table-bordered table-striped" style="text-align:right;top:0">
+
+                    @foreach (var item in loan)
+                    {
+                    <tr >
+                        <td>
+                            <b>@item.Target</b>
+                        </td>
+                        <td>
+                            <b>@item.TotalAmount</b>
+                        </td>
+                        <td>
+                            <b>@item.RemainedAmount</b>
+                        </td>
+                    </tr>
+                    }
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+
+
+
+@section scripts{
+    <script type="text/javascript">
+        $('#Printbtn').on('click', function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: 'post',
+                url: '@Url.Action("IsPrint", "Logs")',
+                success: function (data) {
+                    if (data.toString() == "True") {
+                    }
+                    else if (data.toString() == "false") {
+                    }
+                }
+            })
+        });
+        document.getElementsByTagName("BODY")[0].onafterprint = function() {myFunction()};
+        function myFunction() {
+            var response = null;
+            $.ajax({
+                async: true,
+                url: '@Url.Action("IsPrintM", "Logs")',
+                cache: false,
+                dataType: "json",
+                success: function (data) {
+
+                    if (data.toString() == "True") {
+
+                    }
+                    else if (data.toString() == "false") {
+                    }
+                }
+            });
+        }
+    </script>
+}
+
+
+
+
+
+
+
+
+
+
