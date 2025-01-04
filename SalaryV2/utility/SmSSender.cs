@@ -15,10 +15,10 @@ namespace SalaryV2.utility
             DateTime date;
             string message = " " + "همکار گرامی " + name +" "+ "ورود شما به سامانه دریافت فیش حقوقی با موفقیت انجام شد. " +  "   سازمان آمار و فناوری اطلاعات شهرداری قزوین";
             string username = "shahrdariqazvin_fava";
-            string password = "fava281";
-            string[] senderNumbers = { "30002309" };
+            string password = "";
+            string[] senderNumbers = { "" };
             string[] recipientNumbers = { Phone };
-            //string[] recipientNumbersAdmin = { "09366434536" };
+            //string[] recipientNumbersAdmin = { "" };
             string[] messageBodies = { message };
 
             date = DateTime.Now;
@@ -37,10 +37,10 @@ namespace SalaryV2.utility
             DateTime date;
             string message = " " + "همکار گرامی " + name +" "+ "شناسه امنیتی شما " + code.ToString()+" "+"می باشد."+ "   سازمان فناوری اطلاعات و ارتباطات شهرداری قزوین";
             string username = "shahrdariqazvin_fava";
-            string password = "fava281";
-            string[] senderNumbers = { "30002309" };
+            string password = "";
+            string[] senderNumbers = { "" };
             string[] recipientNumbers = { Phone };
-            //string[] recipientNumbersAdmin = { "09366434536" };
+            //string[] recipientNumbersAdmin = { "" };
             string[] messageBodies = { message };
 
             date = DateTime.Now;
